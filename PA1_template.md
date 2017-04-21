@@ -22,10 +22,10 @@ dataset.
 
     activity<-activity[complete.cases(activity),]
     sum_steps <- aggregate(x = activity$steps, by=list(activity$date), FUN=sum)
-    plot<-qplot(sum_steps$x,geom="histogram",binwidth=5000, main = "Histogram for Total number of steps (NAs removed)", xlab="Total number of steps", ylab="Count")+ geom_vline(data=sum_steps, aes(xintercept = mean(x),color="Mean"))+ geom_vline(data=sum_steps, aes(xintercept = median(x),color="Median"))
+    plot<-qplot(sum_steps$x,geom="histogram",binwidth=5000, main = "Histogram for Total number of steps (NAs removed)", xlab="Total number of steps", ylab="Count")+ geom_vline(data=sum_steps, aes(xintercept = mean(x),color="Mean"))+ geom_vline(data=sum_steps, aes(xintercept = median(x),color="Median"))+ theme_bw()
     print(plot)
 
-![](PA1_template_files/figure-markdown_strict/plot1-1.png)
+![](Figs/plot1-1.png)
 
 Calculate and report the mean and median of the total number of steps
 taken per day:
@@ -52,10 +52,10 @@ Make a time series plot (i.e. type = "l") of the 5-minute interval
     mean_steps_interval <- aggregate(x = activity$steps, by=list(Interval=activity$interval), FUN=mean, na.rm=T)
     max<-mean_steps_interval[which.max(mean_steps_interval$x),]
     #type="l" means that the plot is a line
-    plot<-ggplot(mean_steps_interval, aes(x=Interval, y=x))+ geom_line(lwd=1,colour="blue")+ annotate("point", x=max$Interval, y=max$x, size=2,colour="red")+ annotate("text", label="Maximum", x=max$Interval+150, y=max$x, size=3, fontface="bold.italic")+ ylab("Average number of steps")+ ggtitle("Average number of steps per interval")
+    plot<-ggplot(mean_steps_interval, aes(x=Interval, y=x))+ geom_line(lwd=1,colour="blue")+ annotate("point", x=max$Interval, y=max$x, size=2,colour="red")+ annotate("text", label="Maximum", x=max$Interval+150, y=max$x, size=3, fontface="bold.italic")+ ylab("Average number of steps")+ ggtitle("Average number of steps per interval")+ theme_bw()
     print(plot)
 
-![](PA1_template_files/figure-markdown_strict/plot2-1.png)
+![](Figs/plot2-1.png)
 
 Which 5-minute interval, on average across all the days in the dataset,
 contains the maximum number of steps?
@@ -98,14 +98,13 @@ I decided to use the mean for every 5-minute interval:
 
 Make a histogram of the total number of steps taken each day:
 
-    plot<-qplot(sum_steps$x,geom="histogram", binwidth=5000, main = "Histogram for Total number of steps (NAs replaced)", xlab="Total number of steps", ylab="Count")+ geom_vline(data=sum_steps, aes(xintercept = mean(x),color="Mean"))+ geom_vline(data=sum_steps, aes(xintercept = median(x),color="Median"))
+    plot<-qplot(sum_steps$x,geom="histogram", binwidth=5000, main = "Histogram for Total number of steps (NAs replaced)", xlab="Total number of steps", ylab="Count")+ geom_vline(data=sum_steps, aes(xintercept = mean(x),color="Mean"))+ geom_vline(data=sum_steps, aes(xintercept = median(x),color="Median"))+ theme_bw()
     print(plot)
 
-![](PA1_template_files/figure-markdown_strict/plot3-1.png) Calculate and
-report the mean and median total number of steps taken per day. Do these
-values differ from the estimates from the first part of the assignment?
-What is the impact of imputing missing data on the estimates of the
-total daily number of steps?
+![](Figs/plot3-1.png) Calculate and report the mean and median total
+number of steps taken per day. Do these values differ from the estimates
+from the first part of the assignment? What is the impact of imputing
+missing data on the estimates of the total daily number of steps?
 
     mean(sum_steps$x)
 
@@ -142,7 +141,7 @@ averaged across all weekday days or weekend days (y-axis).
 
     mean_steps_interval <- aggregate(x = replace$steps, by=list(replace$interval,replace$day), FUN=mean)
     names(mean_steps_interval)<-c("interval","day","steps")
-    plot<-ggplot(mean_steps_interval, aes(x=interval, y=steps))+ geom_line(lwd=1,colour="blue")+ facet_grid(day~.)+ xlab("Interval") + ylab("Average number of steps")+ ggtitle("Average number of steps per interval")
+    plot<-ggplot(mean_steps_interval, aes(x=interval, y=steps))+ geom_line(lwd=1,colour="blue")+ facet_grid(day~.)+ xlab("Interval") + ylab("Average number of steps")+ ggtitle("Average number of steps per interval")+ theme_bw()
     print(plot)
 
-![](PA1_template_files/figure-markdown_strict/plot4-1.png)
+![](Figs/plot4-1.png)
